@@ -56,3 +56,4 @@ Route::middleware('auth')->group(function () {
         Route::put('/pengajuan/{id}', [PengajuanController::class, 'update'])->name('pengajuan.update');
     });
 });
+?php>

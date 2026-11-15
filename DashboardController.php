@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         return match ($request->user()->role) {
-            'Mahasiswa' => redirect()->route('dashboard.mahasiswa'),
+            'Mahasiswa' => redirect()->route('mahasiswa.dashboard'),
             'Dosen'     => redirect()->route('dashboard.dosen'),
             default     => redirect()->route('dashboard.admin'),
         };
@@ -79,9 +79,12 @@ class DashboardController extends Controller
             ->whereHas('pendaftaran.mahasiswa', fn ($q) => $q->where('id_dosen_pa', $id))
             ->latest('tanggal_pengajuan')->take(5)->get() : collect();
 
+        $notifikasi = Notifikasi::where('id_pengguna', $user->id_pengguna)
+            ->latest('created_at')->take(5)->get();
+
         return view('dashboard.dosen', compact(
             'user', 'dosen', 'mahasiswaPa', 'pengajuanMenunggu',
-            'mahasiswaBimbingan', 'laporanMenunggu', 'pengajuanTerbaru'
+            'mahasiswaBimbingan', 'laporanMenunggu', 'pengajuanTerbaru', 'notifikasi'
         ));
     }
 

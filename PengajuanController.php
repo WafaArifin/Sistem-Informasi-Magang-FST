@@ -143,11 +143,6 @@ class PengajuanController extends Controller
         $riwayat = $pengajuan->verifikasi()->with('dosen.pengguna')
             ->latest('tanggal_verifikasi')->get();
 
-        // Tandai notifikasi terkait pengajuan ini sudah dibaca
-        Notifikasi::where('id_pengguna', $request->user()->id_pengguna)
-            ->where('id_referensi', $pengajuan->id_pengajuan)
-            ->update(['sudah_dibaca' => true]);
-
         return view('mahasiswa.pengajuan.show', compact('pengajuan', 'riwayat'));
     }
 

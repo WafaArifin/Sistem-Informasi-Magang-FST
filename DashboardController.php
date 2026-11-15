@@ -79,12 +79,9 @@ class DashboardController extends Controller
             ->whereHas('pendaftaran.mahasiswa', fn ($q) => $q->where('id_dosen_pa', $id))
             ->latest('tanggal_pengajuan')->take(5)->get() : collect();
 
-        $notifikasi = Notifikasi::where('id_pengguna', $user->id_pengguna)
-            ->latest('created_at')->take(5)->get();
-
         return view('dashboard.dosen', compact(
             'user', 'dosen', 'mahasiswaPa', 'pengajuanMenunggu',
-            'mahasiswaBimbingan', 'laporanMenunggu', 'pengajuanTerbaru', 'notifikasi'
+            'mahasiswaBimbingan', 'laporanMenunggu', 'pengajuanTerbaru'
         ));
     }
 

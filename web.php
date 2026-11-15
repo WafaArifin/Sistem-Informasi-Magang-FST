@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Dosen\VerifikasiController;
 use App\Http\Controllers\Mahasiswa\InformasiController;
 use App\Http\Controllers\Mahasiswa\PendaftaranController;
 use App\Http\Controllers\Mahasiswa\PengajuanController;
@@ -31,13 +30,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])
         ->middleware(RoleMiddleware::class . ':Admin')->name('dashboard.admin');
-
-    // ---------------- DOSEN ----------------
-    Route::middleware(RoleMiddleware::class . ':Dosen')->prefix('dosen')->name('dosen.')->group(function () {
-        Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('verifikasi.index');
-        Route::get('/verifikasi/{id}', [VerifikasiController::class, 'show'])->name('verifikasi.show');
-        Route::post('/verifikasi/{id}', [VerifikasiController::class, 'store'])->name('verifikasi.store');
-    });
 
     // ---------------- MAHASISWA ----------------
     Route::middleware(RoleMiddleware::class . ':Mahasiswa')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
